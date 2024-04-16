@@ -1,13 +1,14 @@
 <?php
-// Retrieve the email and password from the request
-$email = $_POST['email'];
-$password = $_POST['password'];
+$servername = "localhost";
+$username = "%king";
+$password = "king06";
+$dbname = "employeeportallogin";
 
-// Perform the authentication (e.g., check against a database)
-// For demonstration purposes, let's assume the password is "password"
-if ($email == 'example@example.com' && $password == 'password') {
-    http_response_code(200); // OK status
-} else {
-    http_response_code(401); // Unauthorized status
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>
