@@ -1,6 +1,6 @@
 <?php
-$servername = "https://github.com/kphradasst/testportal.git";
-$username = "%king";
+$servername = "localhost";
+$username = "kinglennin.bioprime@gmail.com";
 $password = "king06";
 $dbname = "employeeportallogin";
 
