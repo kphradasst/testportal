@@ -1,6 +1,6 @@
 <?php
 $servername = "localhost";
-$username = "%king";
+$username = "kinglennin.bioprime@gmail.com";
 $password = "king06";
 $dbname = "employeeportallogin";
 
