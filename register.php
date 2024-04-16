@@ -1,36 +1,39 @@
 <?php
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve the form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+$servername = "localhost";
+$username = "%king";
+$password = "king06";
+$dbname = "employeeportallogin";
 
-    // Validate the form data (e.g., check if passwords match, etc.)
-    // For demonstration purposes, the validation is not included in this example
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // If validation passes, you can proceed to insert the data into the database
-    // You should also hash the password before storing it in the database for security
-
-    // Example of inserting data into a database using PDO
-    try {
-        $pdo = new PDO('mysql:host=localhost;dbname=your_database', 'your_username', 'your_password');
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
-        $stmt->execute(array(
-            ':name' => $name,
-            ':email' => $email,
-            ':password' => password_hash($password, PASSWORD_DEFAULT)
-        ));
-
-        // Redirect to a success page or display a success message
-        header('Location: success.html');
-        exit();
-    } catch(PDOException $e) {
-        echo 'Error: ' . $e->getMessage();
-        exit();
-    }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Get user input
+$name = $_POST['name'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$confirm_password = $_POST['confirm_password'];
+
+// Check if passwords match
+if ($password !== $confirm_password) {
+    die("Passwords do not match");
+}
+
+// Hash the password
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+// Insert user data into the database
+$sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$hashed_password')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "Registration successful";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+$conn->close();
 ?>
